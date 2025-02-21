@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { PostsController } from '@posts/controller';
+import { postServices } from '@posts/services';
 import { UsersController } from '@uesrs/controller';
 import { userServices } from '@uesrs/services';
 import { AuthGuard } from 'auth/guard';
@@ -9,8 +11,12 @@ import { DatabaseModule } from 'database/module';
 
 @Module({
   imports: [ConfigModule.forRoot(environmentConfiguration), DatabaseModule],
-  controllers: [UsersController],
+  controllers: [PostsController, UsersController],
   providers: [
-    { provide: APP_GUARD, useClass: AuthGuard },...userServices],
+    { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: APP_PIPE, useValue: new ValidationPipe({ transform: true, whitelist: true }) },
+    ...postServices,
+    ...userServices,
+  ],
 })
 export class AppModule {}

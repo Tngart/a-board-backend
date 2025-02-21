@@ -31,7 +31,7 @@ export class ApiResponse<T = unknown> {
 
   static ok = <U>({ data, message, meta }: Partial<ApiResponse<U>>) => {
     return new ApiResponse<U>({
-      code: 'KS000',
+      code: 'DW000',
       success: true,
       message: message || 'Success',
       meta,

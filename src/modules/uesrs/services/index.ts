@@ -1,4 +1,4 @@
-import { GetUserService } from './get-user/service';
+import { GetUserService } from './get/service';
 import { RegisterUserService } from './register/service';
 import { SignInUserService } from './sign-in/service';
 
