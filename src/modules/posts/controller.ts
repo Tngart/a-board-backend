@@ -20,12 +20,12 @@ import {
   UpdatePostService,
 } from './services';
 import { CreatePostDto } from './services/create/dto';
-import { AuthenticatedUser } from 'auth/decorators';
+import { AuthenticatedUser, PublicApi } from 'auth/decorators';
 import { IdParam, ResponseDto } from 'core/dto';
 import { UpdatePostDto } from './services/update/dto';
 import { ListPostQuery } from './services/list/dto';
 import { UserInfo } from 'utils/models/request.model';
-import { UpdaetMessageDto } from './services/update-message/dto';
+import { UpdateMessageDto } from './services/update-message/dto';
 
 @Controller('posts')
 export class PostsController {
@@ -47,6 +47,7 @@ export class PostsController {
   }
 
   @Get(':id')
+  @PublicApi()
   async get(@Param() { id }: IdParam) {
     const data = await this.getPostService.exec(id);
 
@@ -54,21 +55,20 @@ export class PostsController {
   }
 
   @Get()
+  @PublicApi()
   async list(@Query() query: ListPostQuery) {
-    const { posts, meta } = await this.listPostService.exec(query);
+    const { posts } = await this.listPostService.exec(query);
 
-    return ResponseDto.ok({ meta, data: posts });
+    return ResponseDto.ok({ data: posts });
   }
 
   @Get('my/post')
   async myPosts(@AuthenticatedUser() { userId }: UserInfo) {
-    const { posts, meta } = await this.listPostService.exec({
+    const { posts } = await this.listPostService.exec({
       createdBy: userId.toString(),
-      limit: 0,
-      offset: 0,
     } as ListPostQuery);
 
-    return ResponseDto.ok({ meta, data: posts });
+    return ResponseDto.ok({ data: posts });
   }
 
   @Patch(':id')
@@ -88,7 +88,7 @@ export class PostsController {
   async updateMessage(
     @AuthenticatedUser() { username }: UserInfo,
     @Param() { id }: IdParam,
-    @Body() dto: UpdaetMessageDto,
+    @Body() dto: UpdateMessageDto,
   ) {
     const post = await this.getPostService.exec(id);
     const data = await this.updateMessageService.exec(dto, post, username);

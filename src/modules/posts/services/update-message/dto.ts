@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class UpdaetMessageDto {
+export class UpdateMessageDto {
   @IsString()
   commentMessage: string;
 }

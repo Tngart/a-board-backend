@@ -1,8 +1,7 @@
 import { IsEnum, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Community } from 'database/post/enum';
-import { PaginationQuery } from 'utils/models/pagination.model';
 
-export class ListPostQuery extends PaginationQuery {
+export class ListPostQuery {
   @IsOptional()
   @IsString()
   title?: string;
@@ -10,10 +9,6 @@ export class ListPostQuery extends PaginationQuery {
   @IsOptional()
   @IsEnum(Community)
   community: Community;
-
-  @IsOptional()
-  @IsString()
-  description?: string;
 
   @IsOptional()
   @IsMongoId()

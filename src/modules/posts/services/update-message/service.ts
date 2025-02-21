@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from 'database/post/schema';
-import { UpdaetMessageDto } from './dto';
+import { UpdateMessageDto } from './dto';
 import { Comment } from 'database/post/embedded';
 import { DateTime } from 'luxon';
 
@@ -8,7 +8,7 @@ import { DateTime } from 'luxon';
 export class UpdateMessageService {
   constructor() {}
 
-  async exec(dto: UpdaetMessageDto, post: Post, username: string) {
+  async exec(dto: UpdateMessageDto, post: Post, username: string) {
     const { commentMessage } = dto;
 
     if (commentMessage) {
