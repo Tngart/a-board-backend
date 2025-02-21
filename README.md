@@ -1,73 +1,108 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+Project Documentation
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a NestJS-based backend service that includes authentication, database management, and modularized service handling. The project is structured into multiple modules and utilities for maintainability and scalability.
 
-## Description
+Project Structure
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+src/
+├── auth/ # Authentication-related files
+│ ├── decorators.ts # Custom decorators for authentication
+│ ├── guard.ts # Authentication guard
+│
+├── core/ # Core utilities and configurations
+│ ├── config/ # Configuration files
+│ ├── dto/ # Data Transfer Objects
+│ ├── exceptions/ # Custom exception handlers
+│
+├── database/ # Database schemas and models
+│ ├── post/ # Post-related database schemas
+│ │ ├── document.ts # Mongoose document definition
+│ │ ├── embedded.ts # Embedded schema for posts
+│ │ ├── enum.ts # Post-related enums
+│ │ ├── schema.ts # Main post schema
+│ ├── user/ # User database schemas
+│ ├── model.ts # User model definition
+│ ├── module.ts # User module configuration
+│
+├── modules/ # Application modules
+│ ├── posts/ # Post-related functionalities
+│ │ ├── services/ # Services handling CRUD operations
+│ │ │ ├── create/ # Create post service
+│ │ │ ├── delete/ # Delete post service
+│ │ │ ├── get/ # Get post service
+│ │ │ ├── list/ # List posts service
+│ │ │ ├── update/ # Update post service
+│ │ ├── update-message/ # Handle update messages for posts
+│ │ │ ├── dto.ts # DTO for message updates
+│ │ │ ├── service.ts # Service for handling message updates
+│ │ │ ├── helper.service.ts # Helper functions for updates
+│ │ │ ├── index.ts # Entry point for message updates
+│ │ ├── controller.ts # API controller for posts
+│
+│ ├── users/ # User-related functionalities
+│ │ ├── services/ # User services
+│ │ ├── controller.ts # User controller
+│
+├── utils/ # Utility functions
+│ ├── helpers/ # Helper functions
+│ │ ├── regex.ts # Regular expression utilities
+│ ├── models/ # General models
+│ │ ├── request.model.ts # Model for handling requests
+│ ├── mongoose/ # Mongoose-related utilities
+│ │ ├── mongoose.enum.ts # Enums for Mongoose
+│
+├── app.module.ts # Root application module
+├── main.ts # Application entry point
+│
+├── test/ # Testing configuration
+│ ├── app.e2e-spec.ts # End-to-end tests
+│ ├── jest-e2e.json # Jest configuration
+│
+├── .env # Environment variables
+├── .gitignore # Git ignore file
+├── .prettierrc # Prettier configuration
+├── nest-cli.json # NestJS CLI configuration
+├── package-lock.json # NPM package lock file
+├── package.json # NPM package file
 
-## Installation
+Installation
 
-```bash
-$ npm install
-```
+npm install
 
-## Running the app
+Create a `.env` file in the root directory and add the following values:
+`MONGO_URL` → The MongoDB connection URL.
+`JWT_SECRET` → The secret key for signing JWT tokens (should be a strong and secure value).
 
-```bash
-# development
-$ npm run start
+Running the Application
 
-# watch mode
-$ npm run start:dev
+npm run start
 
-# production mode
-$ npm run start:prod
-```
+For development mode:
 
-## Test
+npm run start:dev
 
-```bash
-# unit tests
-$ npm run test
+Testing
 
-# e2e tests
-$ npm run test:e2e
+Run unit tests:
 
-# test coverage
-$ npm run test:cov
-```
+npm run test
 
-## Support
+Run end-to-end tests:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+npm run test:e2e
 
-## Stay in touch
+Environment Variables
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Ensure you have a .env file configured with the necessary environment variables.
 
-## License
+API Documentation
 
-Nest is [MIT licensed](LICENSE).
+To be defined (consider using Swagger or Postman for documentation).
+
+License
+
+MIT
+
+Please provide feedback if possible.
