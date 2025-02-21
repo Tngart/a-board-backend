@@ -1,9 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ErrorException } from 'core/exceptions';
-import { ObjectId } from 'database/model';
-import { Request } from 'express';
 import { decode } from 'jsonwebtoken';
+import { Request, UserInfo } from 'utils/models/request.model';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -13,16 +12,16 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
-      const request = context.switchToHttp().getRequest<Request & { userId: ObjectId }>();
+      const request = context.switchToHttp().getRequest<Request>();
       const isPublicApi = this.reflector.get<boolean>('isPublicApi', context.getHandler());
       if (isPublicApi) return true;
 
       const accessToken = request.headers.authorization?.slice(this.BEARER_AUTHENTICATION_SIZE);
       if (!accessToken) throw ErrorException.UNAUTHORIZED();
 
-      const { userId } = decode(accessToken) as { userId: ObjectId };
+      const { userId, username } = decode(accessToken) as UserInfo;
 
-      request.userId = userId;
+      request.userInfo = { userId, username };
 
       return true;
     } catch {

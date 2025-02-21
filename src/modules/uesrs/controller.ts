@@ -4,7 +4,7 @@ import { GetUserService, RegisterUserService, SignInUserService } from './servic
 import { ResponseDto } from 'core/dto';
 import { SignInUserDto } from './services/sign-in/dto';
 import { AuthenticatedUser, PublicApi } from 'auth/decorators';
-import { ObjectId } from 'database/model';
+import { UserInfo } from 'utils/models/request.model';
 
 @Controller('users')
 export class UsersController {
@@ -31,7 +31,7 @@ export class UsersController {
   }
 
   @Get('me')
-  async getMe(@AuthenticatedUser() userId: ObjectId) {
+  async getMe(@AuthenticatedUser() { userId }: UserInfo) {
     const data = await this.getUserService.exec(userId);
 
     return ResponseDto.ok({ data });

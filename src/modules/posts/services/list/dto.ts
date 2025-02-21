@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Community } from 'database/post/enum';
 import { PaginationQuery } from 'utils/models/pagination.model';
 
@@ -14,4 +14,8 @@ export class ListPostQuery extends PaginationQuery {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @IsOptional()
+  @IsMongoId()
+  createdBy?: string;
 }

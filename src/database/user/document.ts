@@ -1,7 +1,7 @@
-import { Prop, Schema } from '@nestjs/mongoose';
-import { HistoricalDocument } from 'database/model';
+import { Prop } from '@nestjs/mongoose';
+import { BaseSchema, HistoricalDocument } from 'database/model';
 
-@Schema({ minimize: true, versionKey: false, timestamps: true })
+@BaseSchema()
 export class UserDocument extends HistoricalDocument {
   @Prop({ sparse: true, unique: true })
   username: string;

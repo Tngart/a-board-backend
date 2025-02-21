@@ -8,13 +8,16 @@ import { ErrorException } from 'core/exceptions';
 
 @Injectable()
 export class SignInUserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
 
   async exec({ username }: SignInUserDto) {
     const user = await this.userModel.findOne({ username });
     if (!user) throw ErrorException.UNAUTHORIZED();
 
-    const accessToken = sign({ userId: user.id }, process.env.JWT_SECRET!);
+    const accessToken = sign(
+      { userId: user._id, username: user.username },
+      process.env.JWT_SECRET!,
+    );
 
     return { accessToken };
   }

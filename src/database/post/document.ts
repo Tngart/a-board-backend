@@ -1,8 +1,9 @@
-import { Prop, Schema } from '@nestjs/mongoose';
-import { HistoricalDocument } from 'database/model';
+import { Prop } from '@nestjs/mongoose';
+import { BaseSchema, HistoricalDocument } from 'database/model';
 import { Community } from './enum';
+import { Comment } from './embedded';
 
-@Schema({ minimize: true, versionKey: false, timestamps: true })
+@BaseSchema()
 export class PostDocument extends HistoricalDocument {
   @Prop()
   title: string;
@@ -11,5 +12,8 @@ export class PostDocument extends HistoricalDocument {
   community: Community;
 
   @Prop()
-  description: string;
+  description?: string;
+
+  @Prop({ type: [Comment.Schema], default: [] })
+  comments: Comment[];
 }

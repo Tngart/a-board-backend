@@ -1,18 +1,31 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   CreatePostService,
   DeletePostService,
   GetPostService,
   ListPostService,
   PostHelperService,
+  UpdateMessageService,
   UpdatePostService,
 } from './services';
 import { CreatePostDto } from './services/create/dto';
 import { AuthenticatedUser } from 'auth/decorators';
-import { ObjectId } from 'database/model';
 import { IdParam, ResponseDto } from 'core/dto';
 import { UpdatePostDto } from './services/update/dto';
 import { ListPostQuery } from './services/list/dto';
+import { UserInfo } from 'utils/models/request.model';
+import { UpdaetMessageDto } from './services/update-message/dto';
 
 @Controller('posts')
 export class PostsController {
@@ -22,11 +35,12 @@ export class PostsController {
     private readonly getPostService: GetPostService,
     private readonly listPostService: ListPostService,
     private readonly updatePostService: UpdatePostService,
+    private readonly updateMessageService: UpdateMessageService,
     private readonly helper: PostHelperService,
   ) {}
 
   @Post()
-  async create(@AuthenticatedUser() userId: ObjectId, @Body() dto: CreatePostDto) {
+  async create(@AuthenticatedUser() { userId }: UserInfo, @Body() dto: CreatePostDto) {
     const data = await this.createPostService.exec(dto, userId);
 
     return ResponseDto.ok({ data });
@@ -46,22 +60,45 @@ export class PostsController {
     return ResponseDto.ok({ meta, data: posts });
   }
 
+  @Get('my/post')
+  async myPosts(@AuthenticatedUser() { userId }: UserInfo) {
+    const { posts, meta } = await this.listPostService.exec({
+      createdBy: userId.toString(),
+      limit: 0,
+      offset: 0,
+    } as ListPostQuery);
+
+    return ResponseDto.ok({ meta, data: posts });
+  }
+
   @Patch(':id')
   async update(
-    @AuthenticatedUser() userId: ObjectId,
+    @AuthenticatedUser() { userId }: UserInfo,
     @Param() { id }: IdParam,
     @Body() dto: UpdatePostDto,
   ) {
     const post = await this.getPostService.exec(id);
     this.helper.checkPostOwner(post, userId);
-    const data = await this.updatePostService.exeec(dto, post);
+    const data = await this.updatePostService.exec(dto, post);
+
+    return ResponseDto.ok({ data });
+  }
+
+  @Patch(':id/message')
+  async updateMessage(
+    @AuthenticatedUser() { username }: UserInfo,
+    @Param() { id }: IdParam,
+    @Body() dto: UpdaetMessageDto,
+  ) {
+    const post = await this.getPostService.exec(id);
+    const data = await this.updateMessageService.exec(dto, post, username);
 
     return ResponseDto.ok({ data });
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@AuthenticatedUser() userId: ObjectId, @Param() { id }: IdParam) {
+  async delete(@AuthenticatedUser() { userId }: UserInfo, @Param() { id }: IdParam) {
     const post = await this.getPostService.exec(id);
     this.helper.checkPostOwner(post, userId);
     await this.deletePostService.exec(post);

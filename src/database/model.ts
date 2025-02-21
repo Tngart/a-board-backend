@@ -19,12 +19,6 @@ export const DateStringProp = () =>
 export const ObjectIdProp = (ref: { ref: string } | { refPath: string }) =>
   Prop({ type: SchemaTypes.ObjectId, ...ref });
 
-export const ArrayOfObjectIdsProp = (ref: { ref: string } | { refPath: string }) =>
-  Prop({ type: [SchemaTypes.ObjectId], default: [], ...ref });
-
-export const ArrayOfObjectIdsPropNoDefault = (ref: { ref: string } | { refPath: string }) =>
-  Prop({ type: [SchemaTypes.ObjectId], ...ref });
-
 export class TimestampDocument extends Document<ObjectId> {
   id: string;
   @DateStringProp() createdAt: string;

@@ -3,6 +3,7 @@ import { DeletePostService } from './delete/service';
 import { GetPostService } from './get/service';
 import { PostHelperService } from './helper.service';
 import { ListPostService } from './list/service';
+import { UpdateMessageService } from './update-message/service';
 import { UpdatePostService } from './update/service';
 
 export {
@@ -12,6 +13,7 @@ export {
   ListPostService,
   PostHelperService,
   UpdatePostService,
+  UpdateMessageService,
 };
 
 export const postServices = [
@@ -21,4 +23,5 @@ export const postServices = [
   ListPostService,
   PostHelperService,
   UpdatePostService,
+  UpdateMessageService,
 ];
