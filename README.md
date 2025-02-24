@@ -6,6 +6,7 @@ This project is a NestJS-based backend service that includes authentication, dat
 
 Project Structure
 
+```
 src/
 ├── auth/ # Authentication-related files
 ├── core/ # Core utilities and configurations
@@ -76,3 +77,4 @@ License
 MIT
 
 Please provide feedback if possible.
+```
