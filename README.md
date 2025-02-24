@@ -8,58 +8,28 @@ Project Structure
 
 src/
 ├── auth/ # Authentication-related files
-│ ├── decorators.ts # Custom decorators for authentication
-│ ├── guard.ts # Authentication guard
-│
 ├── core/ # Core utilities and configurations
-│ ├── config/ # Configuration files
-│ ├── dto/ # Data Transfer Objects
-│ ├── exceptions/ # Custom exception handlers
-│
 ├── database/ # Database schemas and models
 │ ├── post/ # Post-related database schemas
-│ │ ├── document.ts # Mongoose document definition
-│ │ ├── embedded.ts # Embedded schema for posts
-│ │ ├── enum.ts # Post-related enums
-│ │ ├── schema.ts # Main post schema
 │ ├── user/ # User database schemas
 │ ├── model.ts # User model definition
 │ ├── module.ts # User module configuration
-│
 ├── modules/ # Application modules
 │ ├── posts/ # Post-related functionalities
 │ │ ├── services/ # Services handling CRUD operations
-│ │ │ ├── create/ # Create post service
-│ │ │ ├── delete/ # Delete post service
-│ │ │ ├── get/ # Get post service
-│ │ │ ├── list/ # List posts service
-│ │ │ ├── update/ # Update post service
-│ │ ├── update-message/ # Handle update messages for posts
-│ │ │ ├── dto.ts # DTO for message updates
-│ │ │ ├── service.ts # Service for handling message updates
-│ │ │ ├── helper.service.ts # Helper functions for updates
-│ │ │ ├── index.ts # Entry point for message updates
 │ │ ├── controller.ts # API controller for posts
-│
 │ ├── users/ # User-related functionalities
 │ │ ├── services/ # User services
 │ │ ├── controller.ts # User controller
-│
 ├── utils/ # Utility functions
 │ ├── helpers/ # Helper functions
-│ │ ├── regex.ts # Regular expression utilities
 │ ├── models/ # General models
-│ │ ├── request.model.ts # Model for handling requests
 │ ├── mongoose/ # Mongoose-related utilities
-│ │ ├── mongoose.enum.ts # Enums for Mongoose
-│
 ├── app.module.ts # Root application module
 ├── main.ts # Application entry point
-│
 ├── test/ # Testing configuration
 │ ├── app.e2e-spec.ts # End-to-end tests
 │ ├── jest-e2e.json # Jest configuration
-│
 ├── .env # Environment variables
 ├── .gitignore # Git ignore file
 ├── .prettierrc # Prettier configuration
@@ -83,7 +53,7 @@ For development mode:
 
 npm run start:dev
 
-Testing
+Testing (It’s not working yet.)
 
 Run unit tests:
 
