@@ -1,0 +1,15 @@
+{
+  "testEnvironment": "node",
+  "moduleNameMapper": {
+    "^@(.+)$": ["<rootDir>/node_modules/@$1", "<rootDir>/src/modules/$1"],
+    "^(auth|core|database|modules|utils)$": "<rootDir>/src/$1",
+    "^(auth|core|database|modules|utils)/(.+)$": "<rootDir>/src/$1/$2",
+    "^app\\.module$": "<rootDir>/src/app.module",
+    "^test/(.+)$": ["<rootDir>/test/$1"]
+  },
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(ts|tsx|js|jsx)$": ["ts-jest"]
+  },
+  "verbose": true
+}
